@@ -55,6 +55,7 @@ int depositMoney(int,float);
 int withdrawMoney(int,float);
 int transferMoney(int, int, float);
 void welcome_user(int index);
+void user_profile(int index);
 
 //------------------------- user's function declaration end's heree ----------------------------
 
@@ -133,7 +134,9 @@ int main(){
             
         }   //switch end's here...
         
-        
+        printf("\n\n Pres key to go back ");
+        getch();
+        getch();
         
     }                                  //infinite loops end here....
     
@@ -334,7 +337,8 @@ void welcome_user(int index){
     printf("\n 2.Deposit Money");
     printf("\n 3.Withdraw Money");
     printf("\n 4.Transfer Money");
-    printf("\n 5.Log out");
+    printf("\n 5.Profile");
+    printf("\n 6.Log out");
     printf("\n Enter number of your choice ");
     
     scanf("%d",&choice);
@@ -344,6 +348,7 @@ void welcome_user(int index){
         
         case 1:
             printf("\n Your current Balance is Rs %.2f",p[index].balance);
+        
             break;
             
         case 2:
@@ -352,6 +357,10 @@ void welcome_user(int index){
                 printf("\n Successfully deposited, Your update balance is Rs %.2f",p[index].balance);
             else
                 printf("\n Unable to deposite money");
+                
+            
+            
+            
             break;
             
         case 3:
@@ -362,6 +371,9 @@ void welcome_user(int index){
                 printf(", Your current balance is Rs %.2f",p[index].balance);
             }else   
                 printf("\n Sorry, not able to withdraw the money");
+                
+                
+            
                 
             break;
             
@@ -380,11 +392,13 @@ void welcome_user(int index){
                     
                     printf("\n Wrong password, you are logged out!");
                     
-                    getch();
+                    
                     return;
                 }
            }else{
                printf("\n Sorry, no account exist with this account number");
+               getch();
+               break;
            }
             
            //flag = transferMoney(index, index_for_other_user, transaction());
@@ -395,24 +409,53 @@ void welcome_user(int index){
                 
            }else
                 printf("\n Money doesn't transfer, may be account number you enter is wrong");
-                
+        
+                   
            break;
-            
+           
         case 5:
+        
+            user_profile(index);
+            
+            break;
+            
+        case 6:
+            printf("\n You have been loged out successfully");
             return;
             
         default:
             printf("\n Sorry, you have been signed out");
+            
             break;
     }
     
-    
+    printf("\n\n Press key to go back  ");
+    getch();
     getch();
     
     
     }
     
     return;
+    
+}
+
+
+
+void user_profile(int index){
+    
+    printf("\n\n");
+    printf("\n --------------------------------NOTICE----------------------------------------\n");
+    printf("\n You can't change any information here including password.");
+    printf("\n If you wan't to change password or any other information please contanct admin.");
+    
+    printf("\n\n YOUR INFORAMTION\n");
+    printf("\n First Name :- %s",p[index].firstName);
+    printf("\n Last Name :- %s", p[index].lastName);
+    printf("\n Account Number :- %lu",p[index].accountNumber);
+    printf("\n Password :- %s\n",p[index].password);
+    
+    
     
 }
 
@@ -504,11 +547,12 @@ void admin(){
             
             case 1:
                 user_records();
-                getch();
+                
                 break;
             
             case 2:
                 admin_update_record();
+               
                 break;
             
             case 3:
@@ -517,8 +561,13 @@ void admin(){
             default:
                 printf("\n Please choose from the given options");
                 
+                
             
         }                            //switch end's here....
+        
+        printf("\n\n Press key to go back ");
+        getch();
+        getch();
         
     }                               //infinite loops end here.....
 }
