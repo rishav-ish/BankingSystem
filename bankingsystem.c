@@ -53,6 +53,8 @@ int depositMoney(int,float);
 int withdrawMoney(int,float);
 int transferMoney(int, int, float);
 void welcome_user(int index);
+void admin();
+int admin_validation();
 
 
 int getch(void);
@@ -99,6 +101,12 @@ int main(){
                 break;
                 
             case 3:
+                //admin, needed it to know the account number and password of users....
+                admin();
+                break;
+                
+                
+            case 4:
                 exit(0);
                 
             default:
@@ -132,13 +140,6 @@ void decoration(){
     
     
     
-    /*
-    
-    printf("\n    _______  _____   ______ __   _ _____ ______  _______ __   _ _     _\n");
-    printf("|       |     | |  ____ | \  |   |   |_____] |_____| | \  | |____/ \n");
-    printf("|_____  |_____| |_____| |  \_| __|__ |_____] |     | |  \_| |    \_\n");
-
-    */
 }
 
 
@@ -147,7 +148,8 @@ void options(){
     printf("\nPlease choose the number from the below options\n");
     printf("\n1.Create Account");
     printf("\n2.Sign In");
-    printf("\n3.Exit");
+    printf("\n3.Admin");
+    printf("\n4.Exit");
     printf("\nYour choice ");
 }
 
@@ -161,14 +163,15 @@ int createAccount(){
             
     
     
-    printf("\n------------------------------------INFORMATION------------------------------------");
-    printf("\nWelcome User, to cognibank.");
-    printf("\nHere are some information that you need to remember");
-    printf("\nRemember your account number, for future transaction");
-    printf("\nCreate four character password only");
-    printf("\nNever share your password with anyone");
-    printf("\nAnd don't forget your password either");
-    printf("\n-----------------------------------------------------------------------------------"\n\n);
+    printf("\n------------------------------------INFORMATION------------------------------------\n");
+    printf("\n Welcome User, to cognibank.");
+    printf("\n Here are some information that you need to remember.");
+    printf("\n Remember your account number, for future transaction.");
+    printf("\n Create four character password only.");
+    printf("\n Never share your password with anyone.");
+    printf("\n And don't forget your password either.");
+    printf("\n Thank you, for giving us chance to serve you.");
+    printf("\n\n-----------------------------------------------------------------------------------\n\n");
     
     printf("\nEnter your first name :- ");
     scanf("%s",p[count].firstName);
@@ -299,7 +302,7 @@ void welcome_user(int index){
     
     
     while(1){
-    
+        
     system("clear");                   //system("cls") for windows....
     
     printf("\n\n\nWelcome %s %s",p[index].firstName,p[index].lastName);
@@ -341,7 +344,7 @@ void welcome_user(int index){
             break;
             
         case 4:
-           printf("\nPlease enter the account number of people you want to transfer ");
+           printf("\nPlease enter the account number of person you want to transfer ");
            scanf("%lu",&t_acc_no);
             
             
@@ -351,6 +354,13 @@ void welcome_user(int index){
                
                if(validateUser(index))
                         flag = transferMoney(index, index_for_other_user, transaction());
+                else{
+                    
+                    printf("\nWrong password, you are logged out!");
+                    
+                    getch();
+                    return;
+                }
            }else{
                printf("\nSorry, no account exist with this account number");
            }
@@ -359,6 +369,7 @@ void welcome_user(int index){
            
            if(flag == 1){
                 printf("\nMoney transfer successfully");
+                flag = 0;
                 
            }else
                 printf("\nMoney doesn't transfer, may be account number you enter is wrong");
@@ -381,6 +392,50 @@ void welcome_user(int index){
     
     return;
     
+}
+
+
+int admin_validation(){
+    char admin_name[] = "rishav";                                     //change it as you need
+    char admin_password[] = "helloworld";                             //change it as you need
+    
+    char temp_name[50], temp_password[50];
+    
+    printf("\nEnter your username :- ");
+    scanf("%s",temp_name);
+    
+    printf("\nEnter your password :- ");
+    scanf("%s",temp_password);
+    
+    if(strcmp(admin_name, temp_name) == 0 && strcmp(admin_password, temp_password) == 0)
+        return 1;
+    else
+        return 0;
+    
+}
+
+
+
+void admin(){
+    
+    
+    if(admin_validation() == 0){
+        printf("\nSorry, you are not authorized to view this page");
+        return;
+    }
+    
+    for(int i = 0; i<count; ++i){
+        
+        printf("\n-----------------------------User %d---------------------------------\n",i+1);
+        printf("\n%s %s", p[i].firstName, p[i].lastName);
+        printf("\nAccount Number :- %lu",p[i].accountNumber);
+        printf("\nPassword :- %s",p[i].password);
+        
+    }
+    
+    getch();
+    
+    return;
 }
 
 
