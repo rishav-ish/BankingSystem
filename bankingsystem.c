@@ -150,6 +150,10 @@ int main(){
 void decoration(){
     
     
+    
+    //uncomment those you like... and comment the enabled one.
+    //design pattern 1
+    
     /*
     
     printf("\n\t\t\t\t\t ######   #######   ######   ##    ## #### ########     ###    ##    ## ##    ## \n");
@@ -162,7 +166,7 @@ void decoration(){
     
     */
     
-    
+    /*
     
     printf("\n\t\t\t\t\t  _____                  _ ____              _    ");
     printf("\n\t\t\t\t\t / ____|                (_)  _ \\            | |   ");
@@ -172,6 +176,16 @@ void decoration(){
     printf("\n\t\t\t\t\t \\_____\\___/ \\__, |_| |_|_|____/ \\__,_|_| |_|_|\\_\\");
     printf("\n\t\t\t\t\t              __/ |                               ");
     printf("\n\t\t\t\t\t             |___/      \n\n");
+    
+    */
+    
+    
+    printf("\n\t\t\t\t\t ,-----.                      ,--.,-----.    ,---.          ,--.     ");
+    printf("\n\t\t\t\t\t'  .--./ ,---.  ,---. ,--,--, `--'|  |) /_  /  O  \\ ,--,--, |  |,-.  ");
+    printf("\n\t\t\t\t\t|  |    | .-. || .-. ||      \\,--.|  .-.  \\|  .-.  ||      \\|     /  ");
+    printf("\n\t\t\t\t\t'  '--'\\' '-' '' '-' '|  ||  ||  ||  '--' /|  | |  ||  ||  ||  \\  \\  ");
+    printf("\n\t\t\t\t\t `-----' `---' .`-  / `--''--'`--'`------' `--' `--'`--''--'`--'`--' ");
+    printf("\n\t\t\t\t\t               `---'                                                 \n\n");
     
 }
 
