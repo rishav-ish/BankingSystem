@@ -42,6 +42,8 @@ struct People{
 };
 
 
+//--------------------------- user's function declaration start's here ---------------
+
 void decoration();
 void options();
 int createAccount();
@@ -53,8 +55,20 @@ int depositMoney(int,float);
 int withdrawMoney(int,float);
 int transferMoney(int, int, float);
 void welcome_user(int index);
+
+//------------------------- user's function declaration end's heree ----------------------------
+
+
+//------------------------- admin function declaration start's here ----------------------------
+
+void admin_options();
 void admin();
 int admin_validation();
+void user_records();
+
+//------------------------- admin function declaration end's here. -----------------------------
+
+
 
 
 int getch(void);
@@ -77,7 +91,7 @@ int main(){
     
     count = 0;
     
-    while(1){                               //infinite loops start's here....
+    while(1){  //infinite loops start's here....
     
         system("clear");
         decoration();
@@ -92,7 +106,7 @@ int main(){
                 if(flag == 1)
                     welcome_user(count-1);
                 else
-                    printf("\nUnable to create account");
+                    printf("\n Unable to create account");
                     
                 break;
                 
@@ -110,8 +124,8 @@ int main(){
                 exit(0);
                 
             default:
-                printf("\nSomething goes wrong");
-                printf("\nRechoose your options");
+                printf("\n Something goes wrong");
+                printf("\n Rechoose your options");
                 break;
             
             
@@ -126,31 +140,45 @@ int main(){
 }
 
 
+// users' function definition here
+
 void decoration(){
     
     
-    printf("\n ######   #######   ######   ##    ## #### ########     ###    ##    ## ##    ## \n");
-    printf("##    ## ##     ## ##    ##  ###   ##  ##  ##     ##   ## ##   ###   ## ##   ##  \n");
-    printf("##       ##     ## ##        ####  ##  ##  ##     ##  ##   ##  ####  ## ##  ##   \n");
-    printf("##       ##     ## ##   #### ## ## ##  ##  ########  ##     ## ## ## ## #####    \n");
-    printf("##       ##     ## ##    ##  ##  ####  ##  ##     ## ######### ##  #### ##  ##   \n");
-    printf("##    ## ##     ## ##    ##  ##   ###  ##  ##     ## ##     ## ##   ### ##   ##  \n");
-    printf(" ######   #######   ######   ##    ## #### ########  ##     ## ##    ## ##    ## \n\n");
-
+    /*
+    
+    printf("\n\t\t\t\t\t ######   #######   ######   ##    ## #### ########     ###    ##    ## ##    ## \n");
+    printf("\t\t\t\t\t##    ## ##     ## ##    ##  ###   ##  ##  ##     ##   ## ##   ###   ## ##   ##  \n");
+    printf("\t\t\t\t\t##       ##     ## ##        ####  ##  ##  ##     ##  ##   ##  ####  ## ##  ##   \n");
+    printf("\t\t\t\t\t##       ##     ## ##   #### ## ## ##  ##  ########  ##     ## ## ## ## #####    \n");
+    printf("\t\t\t\t\t##       ##     ## ##    ##  ##  ####  ##  ##     ## ######### ##  #### ##  ##   \n");
+    printf("\t\t\t\t\t##    ## ##     ## ##    ##  ##   ###  ##  ##     ## ##     ## ##   ### ##   ##  \n");
+    printf("\t\t\t\t\t ######   #######   ######   ##    ## #### ########  ##     ## ##    ## ##    ## \n\n");
+    
+    */
     
     
+    
+    printf("\n\t\t\t\t\t  _____                  _ ____              _    ");
+    printf("\n\t\t\t\t\t / ____|                (_)  _ \\            | |   ");
+    printf("\n\t\t\t\t\t| |     ___   __ _ _ __  _| |_) | __ _ _ __ | | __");
+    printf("\n\t\t\t\t\t| |    / _ \\ / _` | '_ \\| |  _ < / _` | '_ \\| |/ /");
+    printf("\n\t\t\t\t\t| |___| (_) | (_| | | | | | |_) | (_| | | | |   < ");
+    printf("\n\t\t\t\t\t \\_____\\___/ \\__, |_| |_|_|____/ \\__,_|_| |_|_|\\_\\");
+    printf("\n\t\t\t\t\t              __/ |                               ");
+    printf("\n\t\t\t\t\t             |___/      \n\n");
     
 }
 
 
 void options(){
     
-    printf("\nPlease choose the number from the below options\n");
-    printf("\n1.Create Account");
-    printf("\n2.Sign In");
-    printf("\n3.Admin");
-    printf("\n4.Exit");
-    printf("\nYour choice ");
+    printf("\n Please choose the number from the below options\n");
+    printf("\n 1.Create Account");
+    printf("\n 2.Sign In");
+    printf("\n 3.Admin");
+    printf("\n 4.Exit");
+    printf("\n Your choice ");
 }
 
 
@@ -173,13 +201,13 @@ int createAccount(){
     printf("\n Thank you, for giving us chance to serve you.");
     printf("\n\n-----------------------------------------------------------------------------------\n\n");
     
-    printf("\nEnter your first name :- ");
+    printf("\n Enter your first name :- ");
     scanf("%s",p[count].firstName);
     
-    printf("\nEnter your last name :- ");
+    printf("\n Enter your last name :- ");
     scanf("%s",p[count].lastName);
     
-    printf("\nEnter the 4 character password :- ");
+    printf("\n Enter the 4 character password :- ");
     scanf("%s",p[count].password);
     
     p[count].balance = 0;
@@ -200,7 +228,7 @@ void signIn(){
     unsigned long user_acc_no;
     int index;
     
-    printf("\nEnter your account number ");
+    printf("\n Enter your account number ");
     scanf("%lu",&user_acc_no);
     
     index = searchIndex(user_acc_no);
@@ -211,11 +239,11 @@ void signIn(){
             welcome_user(index);
             
         }else{
-            printf("\nWrong password, please re-try.");
+            printf("\n Wrong password, please re-try.");
         }
         
     }else
-        printf("\nSorry, this account doesn't exist");
+        printf("\n Sorry, this account doesn't exist");
     
     
 }
@@ -234,7 +262,7 @@ int validateUser(int index){
     
     char dup_password[5];
     
-    printf("\nEnter your password\n");
+    printf("\n Enter your password\n");
     scanf("%s",dup_password);
     
     if(strcmp(p[index].password, dup_password) == 0)
@@ -247,7 +275,7 @@ int validateUser(int index){
 float transaction(){
     float m;
     
-    printf("\nEnter the amount of money ");
+    printf("\n Enter the amount of money ");
     scanf("%f",&m);
     
     return m;
@@ -305,15 +333,15 @@ void welcome_user(int index){
         
     system("clear");                   //system("cls") for windows....
     
-    printf("\n\n\nWelcome %s %s",p[index].firstName,p[index].lastName);
-    printf("\nAccount Number :- %lu",p[index].accountNumber);
-    printf("\n\nHere is what you can do");
-    printf("\n1.Look at your balance");
-    printf("\n2.Deposit Money");
-    printf("\n3.Withdraw Money");
-    printf("\n4.Transfer Money");
-    printf("\n5.Log out");
-    printf("\nEnter number of your choice ");
+    printf("\n\n Welcome %s %s",p[index].firstName,p[index].lastName);
+    printf("\n Account Number :- %lu",p[index].accountNumber);
+    printf("\n\n Here is what you can do");
+    printf("\n 1.Look at your balance");
+    printf("\n 2.Deposit Money");
+    printf("\n 3.Withdraw Money");
+    printf("\n 4.Transfer Money");
+    printf("\n 5.Log out");
+    printf("\n Enter number of your choice ");
     
     scanf("%d",&choice);
     
@@ -321,30 +349,30 @@ void welcome_user(int index){
     switch(choice){
         
         case 1:
-            printf("\nYour current Balance is Rs %.2f",p[index].balance);
+            printf("\n Your current Balance is Rs %.2f",p[index].balance);
             break;
             
         case 2:
             flag = depositMoney(index,transaction());
             if(flag == 1)
-                printf("\nSuccessfully deposited, Your update balance is Rs %.2f",p[index].balance);
+                printf("\n Successfully deposited, Your update balance is Rs %.2f",p[index].balance);
             else
-                printf("\nUnable to deposite money");
+                printf("\n Unable to deposite money");
             break;
             
         case 3:
             flag = withdrawMoney(index,transaction());
             
             if(flag == 1){
-                printf("\nSuccessfully withdrawn the given amount");
+                printf("\n Successfully withdrawn the given amount");
                 printf(", Your current balance is Rs %.2f",p[index].balance);
             }else   
-                printf("\nSorry, not able to withdraw the money");
+                printf("\n Sorry, not able to withdraw the money");
                 
             break;
             
         case 4:
-           printf("\nPlease enter the account number of person you want to transfer ");
+           printf("\n Please enter the account number of person you want to transfer ");
            scanf("%lu",&t_acc_no);
             
             
@@ -356,23 +384,23 @@ void welcome_user(int index){
                         flag = transferMoney(index, index_for_other_user, transaction());
                 else{
                     
-                    printf("\nWrong password, you are logged out!");
+                    printf("\n Wrong password, you are logged out!");
                     
                     getch();
                     return;
                 }
            }else{
-               printf("\nSorry, no account exist with this account number");
+               printf("\n Sorry, no account exist with this account number");
            }
             
            //flag = transferMoney(index, index_for_other_user, transaction());
            
            if(flag == 1){
-                printf("\nMoney transfer successfully");
+                printf("\n Money transfer successfully");
                 flag = 0;
                 
            }else
-                printf("\nMoney doesn't transfer, may be account number you enter is wrong");
+                printf("\n Money doesn't transfer, may be account number you enter is wrong");
                 
            break;
             
@@ -380,7 +408,7 @@ void welcome_user(int index){
             return;
             
         default:
-            printf("\nSorry, you have been signed out");
+            printf("\n Sorry, you have been signed out");
             break;
     }
     
@@ -395,16 +423,43 @@ void welcome_user(int index){
 }
 
 
+//admin function definition start's here
+
+
+void admin_options(){
+    
+    printf("\n Hello Admin, enter the number of your choice\n");
+    printf("\n 1. Look at Records");
+    printf("\n 2. Change User password");
+    printf("\n 3. Logout");
+    printf("\n Your choice ");
+    
+    
+}
+
+
+void user_records(){
+    
+    for(int i = 0; i< count; ++i){
+        printf("\n -----------------------------------Users %d-------------------------------\n",i+1);
+        printf("\n %s %s",p[i].firstName, p[i].lastName);
+        printf("\n Account Number :- %lu",p[i].accountNumber);
+    }    
+    
+        printf("\n ------------------------------------END-----------------------------------\n\n");
+    return;
+}
+
 int admin_validation(){
     char admin_name[] = "rishav";                                     //change it as you need
     char admin_password[] = "helloworld";                             //change it as you need
     
     char temp_name[50], temp_password[50];
     
-    printf("\nEnter your username :- ");
+    printf("\n Enter your username :- ");
     scanf("%s",temp_name);
     
-    printf("\nEnter your password :- ");
+    printf("\n Enter your password :- ");
     scanf("%s",temp_password);
     
     if(strcmp(admin_name, temp_name) == 0 && strcmp(admin_password, temp_password) == 0)
@@ -418,24 +473,41 @@ int admin_validation(){
 
 void admin(){
     
+    int choice;
     
     if(admin_validation() == 0){
-        printf("\nSorry, you are not authorized to view this page");
+        printf("\n Sorry, you are not authorized to view this page");
         return;
     }
     
-    for(int i = 0; i<count; ++i){
-        
-        printf("\n-----------------------------User %d---------------------------------\n",i+1);
-        printf("\n%s %s", p[i].firstName, p[i].lastName);
-        printf("\nAccount Number :- %lu",p[i].accountNumber);
-        printf("\nPassword :- %s",p[i].password);
-        
-    }
+    system("clear");
     
-    getch();
-    
-    return;
+    while(1){                          //infinite loops start here..
+        
+        
+        admin_options();
+        scanf("%d",&choice);
+        
+        switch(choice){                //switch start's here..
+            
+            case 1:
+                user_records();
+                getch();
+                break;
+            
+            case 2:
+                break;
+            
+            case 3:
+                return;
+            
+            default:
+                printf("\n Please choose from the given options");
+                
+            
+        }                            //switch end's here....
+        
+    }                               //infinite loops end here.....
 }
 
 
