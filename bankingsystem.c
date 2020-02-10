@@ -20,7 +20,8 @@
 #include <termios.h>                            //for implementing getch in gcc
 #include <unistd.h>
 
-#define MAX 100
+#define MAX 100                                 //by default we can create account for this much users.
+#define PASS_LENGTH 5                           //by default the length of password is PASS_LENGTH - 1, you can modify it as you like.  
 
 
 /*
@@ -36,7 +37,7 @@ struct People{
     char firstName[50];
     char lastName[50];
     float balance;
-    char password[5];
+    char password[PASS_LENGTH];          //so that you can add null character at last.
     
     unsigned long accountNumber;
 };
@@ -56,6 +57,7 @@ int withdrawMoney(int,float);
 int transferMoney(int, int, float);
 void welcome_user(int index);
 void user_profile(int index);
+void mask_password(char [], const int);
 
 //------------------------- user's function declaration end's heree ----------------------------
 
@@ -74,8 +76,8 @@ void admin_update_record();
 
 
 
-int getch(void);
-int getche(void);
+int getch(void);                 //taken it from stack overflow
+int getche(void);                //yup copied it i'm sorry guys :-)
 
 struct People p[MAX];
 unsigned int count;
@@ -269,12 +271,39 @@ int searchIndex(unsigned long acc_no){
     
 }
 
+
+void mask_password(char password[], const int LENGTH){
+    
+    char ch;
+    int count = 0;   
+    
+    getch();
+    
+    printf(" ");
+    
+    while(count < LENGTH - 1){
+            ch = getch();
+            printf("*");
+            password[count] = ch;
+            ++count;
+    }
+    
+    password[LENGTH - 1] = '\0';
+    
+}
+
 int validateUser(int index){
     
-    char dup_password[5];
+    char dup_password[PASS_LENGTH];
+    int count = 0;
+    char ch;
     
     printf("\n Enter your password\n");
-    scanf("%s",dup_password);
+    /*scanf("%s",dup_password);*/
+    
+    mask_password(dup_password, PASS_LENGTH);   //trying something to mask don't like it change it let me know too
+    
+    
     
     if(strcmp(p[index].password, dup_password) == 0)
         return 1;
@@ -330,6 +359,9 @@ int transferMoney(int index1, int index2, float money){
     
     
 }
+
+
+
 
 void welcome_user(int index){
     
