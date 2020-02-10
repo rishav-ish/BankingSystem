@@ -65,6 +65,8 @@ void admin_options();
 void admin();
 int admin_validation();
 void user_records();
+void notice();
+void admin_update_record();
 
 //------------------------- admin function declaration end's here. -----------------------------
 
@@ -191,15 +193,7 @@ int createAccount(){
             
     
     
-    printf("\n------------------------------------INFORMATION------------------------------------\n");
-    printf("\n Welcome User, to cognibank.");
-    printf("\n Here are some information that you need to remember.");
-    printf("\n Remember your account number, for future transaction.");
-    printf("\n Create four character password only.");
-    printf("\n Never share your password with anyone.");
-    printf("\n And don't forget your password either.");
-    printf("\n Thank you, for giving us chance to serve you.");
-    printf("\n\n-----------------------------------------------------------------------------------\n\n");
+    notice();
     
     printf("\n Enter your first name :- ");
     scanf("%s",p[count].firstName);
@@ -426,6 +420,24 @@ void welcome_user(int index){
 //admin function definition start's here
 
 
+
+void notice(){
+    
+    printf("\n------------------------------------INFORMATION------------------------------------\n");
+    printf("\n Welcome User, to cognibank.");
+    printf("\n Here are some information that you need to remember.");
+    printf("\n Remember your account number, for future transaction.");
+    printf("\n Create four character password only.");
+    printf("\n Never share your password with anyone.");
+    printf("\n And don't forget your password either.");
+    printf("\n In case you forget password, please contanct admin.");
+    printf("\n Thank you, for giving us chance to serve you.");
+    printf("\n\n-----------------------------------------------------------------------------------\n\n");
+    
+    
+}
+
+
 void admin_options(){
     
     printf("\n Hello Admin, enter the number of your choice\n");
@@ -441,7 +453,7 @@ void admin_options(){
 void user_records(){
     
     for(int i = 0; i< count; ++i){
-        printf("\n -----------------------------------Users %d-------------------------------\n",i+1);
+        printf("\n\n -----------------------------------Users %d-------------------------------\n",i+1);
         printf("\n %s %s",p[i].firstName, p[i].lastName);
         printf("\n Account Number :- %lu",p[i].accountNumber);
     }    
@@ -496,6 +508,7 @@ void admin(){
                 break;
             
             case 2:
+                admin_update_record();
                 break;
             
             case 3:
@@ -509,6 +522,35 @@ void admin(){
         
     }                               //infinite loops end here.....
 }
+
+
+
+void admin_update_record(){
+    
+    unsigned long acc_no;
+    int index = -1;        //by default account doesn't exist.
+    
+    printf("\n Enter the user accout number :- ");
+    scanf("%lu",&acc_no);
+    
+    index = searchIndex(acc_no);
+    
+    if(index < 0){
+        
+        printf("\n Sorry, looks like account doesn't exist.");
+        return;
+        
+    }
+    
+    
+    printf("\n Enter the new password :- ");
+    scanf("%s",p[index].password);
+    
+    printf("\n successfully changed the password");
+    
+    
+}
+
 
 
 /*
