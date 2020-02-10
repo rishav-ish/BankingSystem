@@ -13,6 +13,12 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
+#include<time.h>                                 //will use unix timestamp for account number.....
+
+
+#include <termios.h>                            //for implementing getch in gcc
+#include <unistd.h>
 
 #define MAX 100
 
@@ -30,24 +36,32 @@ struct People{
     char firstName[50];
     char lastName[50];
     float balance;
+    char password[5];
     
-    int accountNumber;
+    unsigned long accountNumber;
 };
 
 
 void decoration();
 void options();
 int createAccount();
-int signIn();
+void signIn();
+int validateUser(int);
+int searchIndex(unsigned long);
 float transaction();
-void depositMoney(int,float);
+int depositMoney(int,float);
 int withdrawMoney(int,float);
 int transferMoney(int, int, float);
 void welcome_user(int index);
 
 
+int getch(void);
+int getche(void);
+
 struct People p[MAX];
 unsigned int count;
+
+int index_for_acc_no[MAX];
 
 
 
@@ -81,13 +95,7 @@ int main(){
                 break;
                 
             case 2:
-                index = signIn();
-                
-                if(index < 0){
-                    printf("\nNo Account Found");
-                }else
-                    welcome_user(index);
-                    
+                signIn();
                 break;
                 
             case 3:
@@ -112,6 +120,7 @@ int main(){
 
 void decoration(){
     
+    
     printf("\n ######   #######   ######   ##    ## #### ########     ###    ##    ## ##    ## \n");
     printf("##    ## ##     ## ##    ##  ###   ##  ##  ##     ##   ## ##   ###   ## ##   ##  \n");
     printf("##       ##     ## ##        ####  ##  ##  ##     ##  ##   ##  ####  ## ##  ##   \n");
@@ -120,9 +129,16 @@ void decoration(){
     printf("##    ## ##     ## ##    ##  ##   ###  ##  ##     ## ##     ## ##   ### ##   ##  \n");
     printf(" ######   #######   ######   ##    ## #### ########  ##     ## ##    ## ##    ## \n\n");
 
+    
+    
+    
+    /*
+    
+    printf("\n    _______  _____   ______ __   _ _____ ______  _______ __   _ _     _\n");
+    printf("|       |     | |  ____ | \  |   |   |_____] |_____| | \  | |____/ \n");
+    printf("|_____  |_____| |_____| |  \_| __|__ |_____] |     | |  \_| |    \_\n");
 
-    
-    
+    */
 }
 
 
@@ -143,18 +159,32 @@ int createAccount(){
     if(count > MAX)
             return 0;
             
-  
     
-    printf("\nEnter your first name ");
+    
+    printf("\n------------------------------------INFORMATION------------------------------------");
+    printf("\nWelcome User, to cognibank.");
+    printf("\nHere are some information that you need to remember");
+    printf("\nRemember your account number, for future transaction");
+    printf("\nCreate four character password only");
+    printf("\nNever share your password with anyone");
+    printf("\nAnd don't forget your password either");
+    printf("\n-----------------------------------------------------------------------------------"\n\n);
+    
+    printf("\nEnter your first name :- ");
     scanf("%s",p[count].firstName);
     
-    printf("\nEnter your last name ");
+    printf("\nEnter your last name :- ");
     scanf("%s",p[count].lastName);
+    
+    printf("\nEnter the 4 character password :- ");
+    scanf("%s",p[count].password);
     
     p[count].balance = 0;
     
     
-    p[count].accountNumber = count;
+    p[count].accountNumber = (unsigned long) time(NULL);
+    
+    index_for_acc_no[count] = p[count].accountNumber;
     
     count += 1;
     
@@ -162,17 +192,52 @@ int createAccount(){
     
 }
 
-int signIn(){
+void signIn(){
     
-    int user_acc_no;
+    unsigned long user_acc_no;
+    int index;
     
     printf("\nEnter your account number ");
-    scanf("%d",&user_acc_no);
+    scanf("%lu",&user_acc_no);
     
-    if(user_acc_no > count)
-        return -1;
+    index = searchIndex(user_acc_no);
+    
+    if(index >= 0){
         
-    return user_acc_no;
+        if(validateUser(index)){
+            welcome_user(index);
+            
+        }else{
+            printf("\nWrong password, please re-try.");
+        }
+        
+    }else
+        printf("\nSorry, this account doesn't exist");
+    
+    
+}
+
+int searchIndex(unsigned long acc_no){
+    
+    for(int i = 0; i <  MAX; ++i)
+        if(index_for_acc_no[i] == acc_no)
+            return i;
+    
+    return -1;
+    
+}
+
+int validateUser(int index){
+    
+    char dup_password[5];
+    
+    printf("\nEnter your password\n");
+    scanf("%s",dup_password);
+    
+    if(strcmp(p[index].password, dup_password) == 0)
+        return 1;
+    else
+        return 0;
     
 }
 
@@ -185,12 +250,14 @@ float transaction(){
     return m;
 }
 
-void depositMoney(int index, float money){
+int depositMoney(int index, float money){
     
+    if(index > count || index < 0)
+            return 0;
     
     p[index].balance += money;
 
-    printf("\nMoney is successfully deposited to your account");    
+    return 1;
 }
 
 
@@ -224,16 +291,19 @@ int transferMoney(int index1, int index2, float money){
 
 void welcome_user(int index){
     
-    int t_acc_no;
+    unsigned long t_acc_no;
     int choice;
+    int index_for_other_user = -1;                                        // by default no account exist.
     int flag = 0;                                          //flag value
     
     
     
     while(1){
-    system("clear");
-    printf("\nWelcome %s %s",p[index].firstName,p[index].lastName);
-    printf("\nAccount Number :- %d",p[index].accountNumber);
+    
+    system("clear");                   //system("cls") for windows....
+    
+    printf("\n\n\nWelcome %s %s",p[index].firstName,p[index].lastName);
+    printf("\nAccount Number :- %lu",p[index].accountNumber);
     printf("\n\nHere is what you can do");
     printf("\n1.Look at your balance");
     printf("\n2.Deposit Money");
@@ -252,8 +322,11 @@ void welcome_user(int index){
             break;
             
         case 2:
-            depositMoney(index,transaction());
-            printf("\nYour update balance is Rs %.2f",p[index].balance);
+            flag = depositMoney(index,transaction());
+            if(flag == 1)
+                printf("\nSuccessfully deposited, Your update balance is Rs %.2f",p[index].balance);
+            else
+                printf("\nUnable to deposite money");
             break;
             
         case 3:
@@ -261,7 +334,7 @@ void welcome_user(int index){
             
             if(flag == 1){
                 printf("\nSuccessfully withdrawn the given amount");
-                printf("\nYour current balance is Rs %.2f",p[index].balance);
+                printf(", Your current balance is Rs %.2f",p[index].balance);
             }else   
                 printf("\nSorry, not able to withdraw the money");
                 
@@ -269,15 +342,20 @@ void welcome_user(int index){
             
         case 4:
            printf("\nPlease enter the account number of people you want to transfer ");
-           scanf("%d",&t_acc_no);
+           scanf("%lu",&t_acc_no);
             
             
-           if(t_acc_no > count || t_acc_no < 0){
-                printf("\nNot valid account number");
-                break;
+            index_for_other_user = searchIndex(t_acc_no);
+            
+           if(index_for_other_user >= 0){
+               
+               if(validateUser(index))
+                        flag = transferMoney(index, index_for_other_user, transaction());
+           }else{
+               printf("\nSorry, no account exist with this account number");
            }
             
-           flag = transferMoney(index, t_acc_no, transaction());
+           //flag = transferMoney(index, index_for_other_user, transaction());
            
            if(flag == 1){
                 printf("\nMoney transfer successfully");
@@ -295,10 +373,51 @@ void welcome_user(int index){
             break;
     }
     
+    
+    getch();
+    
+    
     }
     
     return;
     
+}
+
+
+/*
+    STACK OVERFLOW CODE FOR IMPLEMENTING GETCH IN GCC COMPILER
+    
+    it has been simpley copy pasted here
+    
+*/
+
+
+/* reads from keypress, doesn't echo */
+int getch(void)
+{
+    struct termios oldattr, newattr;
+    int ch;
+    tcgetattr( STDIN_FILENO, &oldattr );
+    newattr = oldattr;
+    newattr.c_lflag &= ~( ICANON | ECHO );
+    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
+    ch = getchar();
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
+    return ch;
+}
+
+/* reads from keypress, echoes */
+int getche(void)
+{
+    struct termios oldattr, newattr;
+    int ch;
+    tcgetattr( STDIN_FILENO, &oldattr );
+    newattr = oldattr;
+    newattr.c_lflag &= ~( ICANON );
+    tcsetattr( STDIN_FILENO, TCSANOW, &newattr );
+    ch = getchar();
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldattr );
+    return ch;
 }
 
 
