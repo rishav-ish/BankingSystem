@@ -10,6 +10,7 @@ A small command line banking system using c
   <li>Users are able to withdraw money</li>
   <li>Usera are able to transfer money to another user</li>
   <li>Usera are able to view their balance</li>
+  <li>Admin can monitor every users account</li>
  </ul>
  <br>
  <b>Note:- <b> when the programm get terminated no data will be stored, no database or file system is used.
