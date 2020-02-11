@@ -24,6 +24,20 @@
 #define PASS_LENGTH 5                           //by default the length of password is PASS_LENGTH - 1, you can modify it as you like.  
 
 
+
+/*
+    LETS CHECK IF THE OS IN WINDOWS 
+    
+*/
+
+
+#if _WIN32 || _WIN64
+    #define CLEAR system("cls")
+#else
+    #define CLEAR system("clear")
+#endif
+
+
 /*
     GLOBAL VARIABLE DECLARATION
     
@@ -58,6 +72,7 @@ int transferMoney(int, int, float);
 void welcome_user(int index);
 void user_profile(int index);
 void mask_password(char [], const int);
+void clear_screen();
 
 //------------------------- user's function declaration end's heree ----------------------------
 
@@ -98,7 +113,8 @@ int main(){
     
     while(1){  //infinite loops start's here....
     
-        system("clear");
+        //system("clear");
+        clear_screen();
         decoration();
         options();
         scanf("%d",&choice);
@@ -148,6 +164,14 @@ int main(){
 
 
 // users' function definition here
+
+
+
+void clear_screen(){
+    
+        CLEAR;
+    
+}
 
 void decoration(){
     
@@ -378,7 +402,8 @@ void welcome_user(int index){
     
     while(1){
         
-    system("clear");                   //system("cls") for windows....
+    //system("clear");                   //system("cls") for windows....
+    clear_screen();
     
     printf("\n\n Welcome %s %s",p[index].firstName,p[index].lastName);
     printf("\n Account Number :- %lu",p[index].accountNumber);
@@ -591,7 +616,8 @@ void admin(){
     
     while(1){                          //infinite loops start here..
         
-        system("clear");
+        //system("clear");
+        clear_screen();
         admin_options();
         scanf("%d",&choice);
         
