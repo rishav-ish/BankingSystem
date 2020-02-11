@@ -220,8 +220,10 @@ int createAccount(){
     printf("\n Enter your last name :- ");
     scanf("%s",p[count].lastName);
     
+    
+    printf("\nNOTE:- only 4 character password are valid");
     printf("\n Enter the 4 character password :- ");
-    scanf("%s",p[count].password);
+    mask_password(p[count].password, PASS_LENGTH);
     
     p[count].balance = 0;
     
@@ -289,6 +291,8 @@ void mask_password(char password[], const int LENGTH){
     }
     
     password[LENGTH - 1] = '\0';
+    
+    printf("\n");
     
 }
 
@@ -552,8 +556,10 @@ void user_records(){
 }
 
 int admin_validation(){
-    char admin_name[] = "rishav";                                     //change it as you need
-    char admin_password[] = "helloworld";                             //change it as you need
+    char admin_name[] = "root";                                     //change it as you need
+    char admin_password[] = "toor";                             //change it as you need
+    
+    int password_length = strlen(admin_password) + 1;
     
     char temp_name[50], temp_password[50];
     
@@ -561,7 +567,7 @@ int admin_validation(){
     scanf("%s",temp_name);
     
     printf("\n Enter your password :- ");
-    scanf("%s",temp_password);
+    mask_password(temp_password, password_length);
     
     if(strcmp(admin_name, temp_name) == 0 && strcmp(admin_password, temp_password) == 0)
         return 1;
@@ -581,11 +587,11 @@ void admin(){
         return;
     }
     
-    system("clear");
+    
     
     while(1){                          //infinite loops start here..
         
-        
+        system("clear");
         admin_options();
         scanf("%d",&choice);
         
