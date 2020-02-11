@@ -221,7 +221,7 @@ int createAccount(){
     scanf("%s",p[count].lastName);
     
     
-    printf("\nNOTE:- only 4 character password are valid");
+    printf("\n ** NOTE:- only 4 character password are valid **");
     printf("\n Enter the 4 character password :- ");
     mask_password(p[count].password, PASS_LENGTH);
     
@@ -497,7 +497,7 @@ void user_profile(int index){
     printf("\n\n");
     printf("\n --------------------------------NOTICE----------------------------------------\n");
     printf("\n You can't change any information here including password.");
-    printf("\n If you wan't to change password or any other information please contanct admin.");
+    printf("\n If you want to change password or any other information please contanct admin.");
     
     printf("\n\n YOUR INFORAMTION\n");
     printf("\n First Name :- %s",p[index].firstName);
@@ -645,7 +645,7 @@ void admin_update_record(){
     
     
     printf("\n Enter the new password :- ");
-    scanf("%s",p[index].password);
+    mask_password(p[index].password, PASS_LENGTH);
     
     printf("\n successfully changed the password");
     
